@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "telegramgpt"
+version = "0.1.0"
+description = ""
+authors = ["alserious <_>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+openai = "^0.27.2"
+aiogram = "^2.25.1"
+loguru = "^0.6.0"
+python-dotenv = "^1.0.0"
+
+
+[tool.poetry.group.dev.dependencies]
+ansible = "6.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
