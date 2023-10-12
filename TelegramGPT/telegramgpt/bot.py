@@ -8,7 +8,7 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 
 
 # from telegramgpt.gpt import send_message_to_openai
-from telegramgpt.config import BOT_TOKEN, ADMIN_CHAT_ID, logger
+from .config import BOT_TOKEN, ADMIN_CHAT_ID, logger
 
 
 bot = Bot(token=BOT_TOKEN)

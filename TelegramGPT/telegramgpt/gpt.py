@@ -1,6 +1,6 @@
 import openai
 
-from telegramgpt.config import OPENAI_API_KEY
+from .config import OPENAI_API_KEY
 
 
 def send_message_to_openai(message: str) -> str:
@@ -14,12 +14,10 @@ def send_message_to_openai(message: str) -> str:
     return response
 
 
-
-
 # @dp.message_handler()
 # async def gpt(message: types.Message):
 #     response = openai.Completion.create(
-#         model="text-davinci-003", # text-davinci-003 text-ada-001 -> select model to use 
+#         model="text-davinci-003", # text-davinci-003 text-ada-001 -> select model to use
 #         prompt=message.text,
 #         temperature=0.5,
 #         max_tokens=100,

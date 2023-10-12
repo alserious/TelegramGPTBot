@@ -39,6 +39,7 @@ jobs:
           port: ${{ secrets.PORT }}
           key: ${{ secrets.KEY }}
           script: |
+            docker image prune -a --filter "until=2h"
             docker load --input /opt/TelegramGPTBot/telegram_gpt_bot_image.tar
             OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} BOT_TOKEN=${{ secrets.BOT_TOKEN }} \
             ADMIN_CHAT_ID=${{ secrets.ADMIN_CHAT_ID }} LOG_LEVEL=${{ secrets.LOG_LEVEL }} \

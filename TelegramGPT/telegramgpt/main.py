@@ -1,4 +1,4 @@
-from telegramgpt import bot
+from .bot import bot
 
 
 def main() -> None:
