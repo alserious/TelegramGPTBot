@@ -1,10 +1,10 @@
 version: "3.9"
 
 services:
-  TelegramGPTBot:
-    image: TelegramGPTBot_image
-    hostname: TelegramGPTBot
-    container_name: TelegramGPTBot_container
+  telegram_gpt_bot:
+    image: telegram_gpt_bot_image
+    hostname: telegram_gpt_bot
+    container_name: telegram_gpt_bot_container
     command: python3 main.py
     build:
       context: TelegramGPT/
