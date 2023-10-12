@@ -12,6 +12,7 @@ services:
     restart: "always"
     environment:
       - TZ=Europe/Moscow
+      - IS_PROD=prod
     logging:
       driver: "local"
     deploy:
