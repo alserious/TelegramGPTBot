@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  TelegramGPTBot:
+    image: TelegramGPTBot_image
+    hostname: TelegramGPTBot
+    container_name: TelegramGPTBot_container
+    command: python3 main.py
+    build:
+      context: TelegramGPT/
+      dockerfile: ./Dockerfile
+    restart: "always"
+    environment:
+      - TZ=Europe/Moscow
+    logging:
+      driver: "local"
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+        reservations:
+          memory: 64M

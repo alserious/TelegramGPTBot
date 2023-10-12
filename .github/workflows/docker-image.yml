@@ -8,8 +8,8 @@ on:
 
 env:
   image_name: TelegramGPTBot:$(date +%s)
-  image_path: ...
-  prod_image_folder_path: ...
+  image_path: /home/runner/work/TelegramGPTBot/TelegramGPTBot/TelegramGPTBot_image.tar
+  prod_image_folder_path: /root/projects/TelegramGPTBot
 
 jobs:
   build:
@@ -17,30 +17,32 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Build the Docker image
+      - name: ls -l
         run: |
           ls -l
 
-      - name: Run the Docker image
+      - name: Build the Docker image
         run: |
-          pwd
+          docker-compose -f docker-compose.prod.yml build
 
-      #     docker build . --file Dockerfile --tag $image_name
+      - name: Save the Docker image to tar file
+        run: |
+          docker save -o TelegramGPTBot_image.tar TelegramGPTBot_image:latest
 
-      # - name: Save the Docker image to tar file
-      #   run: |
-      #     docker save -o $image_path $image_name
+      - name: ls -l
+        run: |
+          ls -l
 
-      # - name: Copy tar file to prod server
-      #   uses: appleboy/scp-action@v0.1.4
-      #   with:
-      #     host: ${{ secrets.HOST }}
-      #     username: ${{ secrets.USERNAME }}
-      #     password: ${{ secrets.PASSWORD }}
-      #     port: ${{ secrets.PORT }}
-      #     # source: "tests/a.txt,tests/b.txt"
-      #     source: "$image_path"
-      # target: $prod_image_folder_path
+      - name: Copy tar file to prod server
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          # source: "tests/a.txt,tests/b.txt"
+          source: "$image_path"
+          target: $prod_image_folder_path
 
       # - name: Copy tar file to prod server
       #   run: |
