@@ -1,6 +1,6 @@
 import openai
 
-from .config import OPENAI_API_KEY
+from config import OPENAI_API_KEY
 
 
 def send_message_to_openai(message: str) -> str:
