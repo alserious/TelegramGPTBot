@@ -6,20 +6,15 @@ on:
   pull_request:
     branches: ["main"]
 
-env:
-  image_name: TelegramGPTBot:$(date +%s)
-  image_path: /home/runner/work/TelegramGPTBot/TelegramGPTBot/telegram_gpt_bot_image.tar
-  prod_image_folder_path: /root/projects/TelegramGPTBot
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
-      - name: Check ls -l before build
-        run: |
-          ls -l -h
+      # - name: Check ls -l before build
+      #   run: |
+      #     ls -l -h
 
       - name: Build the Docker image
         run: |
@@ -27,22 +22,24 @@ jobs:
 
       - name: Save the Docker image to tar file
         run: |
-          docker save -o telegram_gpt_bot_image.tar telegram_gpt_bot_image:latest
+          mkdir ../build
+          docker save -o ../build/telegram_gpt_bot_image.tar telegram_gpt_bot_image:latest
 
-      - name: Check ls -l after docker build
-        run: |
-          ls -l -h
+      # - name: Check ls -l after docker build
+      #   run: |
+      #     ls -l -h
 
-      - name: Copy tar file to prod server
+      - name: Copy file via scp
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
+          overwrite: true
           port: ${{ secrets.PORT }}
           key: ${{ secrets.KEY }}
           # source: "tests/a.txt,tests/b.txt"
-          source: "$image_path"
-          target: $prod_image_folder_path
+          source: "telegram_gpt_bot_image.tar"
+          target: "/root/projects/TelegramGPTBot"
 
       - name: Load the Docker image from tar file
         run: |
