@@ -8,7 +8,7 @@ on:
 
 env:
   image_name: TelegramGPTBot:$(date +%s)
-  image_path: /home/runner/work/TelegramGPTBot/TelegramGPTBot/TelegramGPTBot_image.tar
+  image_path: /home/runner/work/TelegramGPTBot/TelegramGPTBot/telegram_gpt_bot_image.tar
   prod_image_folder_path: /root/projects/TelegramGPTBot
 
 jobs:
@@ -17,9 +17,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: ls -l
+      - name: Check ls -l before build
         run: |
-          ls -l
+          ls -l -h
 
       - name: Build the Docker image
         run: |
@@ -29,20 +29,24 @@ jobs:
         run: |
           docker save -o telegram_gpt_bot_image.tar telegram_gpt_bot_image:latest
 
-      - name: ls -l
+      - name: Check ls -l after docker build
         run: |
-          ls -l
+          ls -l -h
 
       - name: Copy tar file to prod server
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
+          key: ${{ secrets.KEY }}
           # source: "tests/a.txt,tests/b.txt"
           source: "$image_path"
           target: $prod_image_folder_path
+
+      - name: Load the Docker image from tar file
+        run: |
+          docker load --input telegram_gpt_bot_image.tar
 
       # - name: Copy tar file to prod server
       #   run: |
