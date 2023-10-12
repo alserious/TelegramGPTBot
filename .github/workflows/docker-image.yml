@@ -27,7 +27,7 @@ jobs:
 
       - name: Save the Docker image to tar file
         run: |
-          docker save -o TelegramGPTBot_image.tar TelegramGPTBot_image:latest
+          docker save -o telegram_gpt_bot_image.tar telegram_gpt_bot_image:latest
 
       - name: ls -l
         run: |
