@@ -22,8 +22,8 @@ jobs:
 
       - name: Save the Docker image to tar file
         run: |
-          mkdir ../build
-          docker save -o ../build/telegram_gpt_bot_image.tar telegram_gpt_bot_image:latest
+          # mkdir ../build
+          docker save -o telegram_gpt_bot_image.tar telegram_gpt_bot_image:latest
 
       # - name: Check ls -l after docker build
       #   run: |
