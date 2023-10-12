@@ -19,22 +19,28 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          docker build . --file Dockerfile --tag $image_name
+          ls -l
 
-      - name: Save the Docker image to tar file
+      - name: Run the Docker image
         run: |
-          docker save -o $image_path $image_name
+          pwd
 
-      - name: Copy tar file to prod server
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          # source: "tests/a.txt,tests/b.txt"
-          source: "$image_path"
-          target: $prod_image_folder_path
+      #     docker build . --file Dockerfile --tag $image_name
+
+      # - name: Save the Docker image to tar file
+      #   run: |
+      #     docker save -o $image_path $image_name
+
+      # - name: Copy tar file to prod server
+      #   uses: appleboy/scp-action@v0.1.4
+      #   with:
+      #     host: ${{ secrets.HOST }}
+      #     username: ${{ secrets.USERNAME }}
+      #     password: ${{ secrets.PASSWORD }}
+      #     port: ${{ secrets.PORT }}
+      #     # source: "tests/a.txt,tests/b.txt"
+      #     source: "$image_path"
+      # target: $prod_image_folder_path
 
       # - name: Copy tar file to prod server
       #   run: |
