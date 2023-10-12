@@ -12,41 +12,36 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # - name: Check ls -l before build
-      #   run: |
-      #     ls -l -h
-
       - name: Build the Docker image
         run: |
           docker-compose -f docker-compose.prod.yml build
 
       - name: Save the Docker image to tar file
         run: |
-          # mkdir ../build
           docker save -o telegram_gpt_bot_image.tar telegram_gpt_bot_image:latest
-
-      # - name: Check ls -l after docker build
-      #   run: |
-      #     ls -l -h
-
-      - name: List folders
-        run: ls -al .
 
       - name: Copy file via scp
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          # overwrite: true
           port: ${{ secrets.PORT }}
           key: ${{ secrets.KEY }}
+          # overwrite: true
           # source: "tests/a.txt,tests/b.txt"
-          source: "telegram_gpt_bot_image.tar"
+          source: "docker-compose.prod.yml,telegram_gpt_bot_image.tar"
           target: "/root/projects/TelegramGPTBot"
 
-      - name: Load the Docker image from tar file
-        run: |
-          docker load --input telegram_gpt_bot_image.tar
+      - name: Executing remote ssh commands
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.KEY }}
+          script: |
+            docker load --input /root/projects/TelegramGPTBot/telegram_gpt_bot_image.tar
+            docker-compose -f /root/projects/TelegramGPTBot/docker-compose.prod.yml up
 
       # - name: Copy tar file to prod server
       #   run: |
