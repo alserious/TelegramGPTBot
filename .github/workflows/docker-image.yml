@@ -29,12 +29,15 @@ jobs:
       #   run: |
       #     ls -l -h
 
+      - name: List folders
+        run: ls -al .
+
       - name: Copy file via scp
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          overwrite: true
+          # overwrite: true
           port: ${{ secrets.PORT }}
           key: ${{ secrets.KEY }}
           # source: "tests/a.txt,tests/b.txt"
