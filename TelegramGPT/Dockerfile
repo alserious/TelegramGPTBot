@@ -16,12 +16,13 @@ ENV PIP_DISABLE_PIP_VERSION_CHECK=1
 ENV PIP_DEFAULT_TIMEOUT=60
 ENV PIP_ROOT_USER_ACTION=ignore
 
-COPY telegramgpt/ /opt/app/
-COPY poetry.lock /opt/app/poetry.lock
-
 WORKDIR /opt/app/
 
-RUN pip install poetry
+RUN pip3 install poetry
+
+COPY poetry.lock pyproject.toml /opt/app/
 
 RUN poetry config virtualenvs.create false \
     && poetry install $(test "$IS_PROD" == prod && echo "--no-dev") --no-interaction --no-ansi
+
+COPY telegramgpt/ /opt/app/

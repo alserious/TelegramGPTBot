@@ -42,4 +42,4 @@ jobs:
             docker load --input /opt/TelegramGPTBot/telegram_gpt_bot_image.tar
             OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} BOT_TOKEN=${{ secrets.BOT_TOKEN }} \
             ADMIN_CHAT_ID=${{ secrets.ADMIN_CHAT_ID }} LOG_LEVEL=${{ secrets.LOG_LEVEL }} \
-            docker compose -f /opt/TelegramGPTBot/docker-compose.prod.yml up
+            IS_PROD=prod docker compose -f /opt/TelegramGPTBot/docker-compose.prod.yml up
